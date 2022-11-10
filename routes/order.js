@@ -19,7 +19,7 @@ router.post("/", verifyTokenAndAuthorization, async (req, res) => {
 });
 
 // UPDATE
-router.put("/:id", verifyTokenAndAdmin, async (req, res) => {
+router.put("/:id", verifyTokenAndAuthorization, async (req, res) => {
   try {
     const updatedOrder = await Order.findByIdAndUpdate(
       req.params.id,
@@ -35,7 +35,7 @@ router.put("/:id", verifyTokenAndAdmin, async (req, res) => {
 });
 
 // DELETE
-router.delete("/:id", verifyTokenAndAdmin, async (req, res) => {
+router.delete("/:id", verifyTokenAndAuthorization, async (req, res) => {
   try {
     await Order.findByIdAndDelete(req.params.id);
     res.status(200).json("Order has been deleted...");
@@ -85,6 +85,7 @@ router.get("/income", verifyTokenAndAdmin, async (req, res) => {
         },
       },
     ]);
+    console.log(income);
     res.status(200).json(income);
   } catch (err) {
     res.status(500).json(err);
